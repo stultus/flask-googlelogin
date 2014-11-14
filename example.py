@@ -65,6 +65,9 @@ def profile():
 @app.route('/oauth2callback')
 @googlelogin.oauth2callback
 def login(token, userinfo, **params):
+    if (token==None):
+        if ('error' in userinfo and userinfo['error']=='access_denied'):
+            return redirect(url_for('index'))
     user = users[userinfo['id']] = User(userinfo)
     login_user(user)
     session['token'] = json.dumps(token)

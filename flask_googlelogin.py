@@ -201,13 +201,7 @@ class GoogleLogin(object):
                 if params:
                     params.update(dict(request.args.items()))
                 else:
-                    return '''
-                    <script>
-                      window.onload = function() {
-                        location.href = '?' + window.location.hash.substr(1);
-                      };
-                    </script>
-                    '''
+                    params.update(token=None, userinfo=dict(request.args.items()))
 
             return view_func(**params)
 
